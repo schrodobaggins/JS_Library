@@ -1,37 +1,57 @@
 // Library App
 // Created using TOP 
 // Michael Schroeder
+"use strict";
 
 let myLibrary = [];
 
+const submit = document.getElementById('mainform');
 
 
-function Book(title, author, pages, read, id) {
-  // the constructor
+submit.addEventListener('click', event => {
+    const { target } = event;
+    // const { value } = target;
+    if(!target.matches('button')) {
+        return;
+      }
+      console.log('drawing library');
+      drawLibrary();
+});
+
+function Book(title, author, pages, read) {
+  // Book constructor
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
-  this.id = id;
 }
 
+
+// forcing a few test books to display table and test function addBookToLibrary
 function populateLibrary() {
-    myLibrary.push(new Book('Ulysses', 'James Joyce', '347', 'yes', 0));
-    myLibrary.push(new Book('Don Quixote', 'Miguel de Cervantes', '500', 'yes', 1));
-    myLibrary.push(new Book('Moby Dick', 'Herman Melville', '500', 'no', 2));
-    console.log("populated library");
+    myLibrary.push(new Book('Ulysses', 'James Joyce', '347', 'yes'));
+    myLibrary.push(new Book('Don Quixote', 'Miguel de Cervantes', '500', 'yes'));
+    myLibrary.push(new Book('Moby Dick', 'Herman Melville', '500', 'no'));
 }
 
-
-// TODO: Write a function that loops through the array and displays each 
-// book on the page. You can display them in some sort of table, or each on 
-// their own “card”. It might help for now to manually add a few books to your 
-// array so you can see the display.
 function addBookToLibrary() {
-    // do stuff here
-    var html = "<table border='1|1'>";
+    const title = document.getElementById('bookTitle').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const read = document.getElementById('alreadyread').checked;
+
+    // e.preventDefault();
+    let submittedBook = new Book(title, author, pages, read);
+    myLibrary.push(submittedBook);
+    console.log('pushing');
+    drawLibrary();
+}
+
+// draws the table and adds all array elements to the table
+function drawLibrary() {
+    let html = "<table border='1|1'>";
     
-    for (var i = 0; i < myLibrary.length; i++) {
+    for (let i = 0; i < myLibrary.length; i++) {
         html+="<tr>";
         html+="<td>"+myLibrary[i].title+"</td>";
         html+="<td>"+myLibrary[i].author+"</td>";
@@ -45,8 +65,9 @@ function addBookToLibrary() {
 }
 
 function removeBook() {
-    // do stuff here
+     // do stuff here
+
 }
 
 window.onload = populateLibrary();
-addBookToLibrary();
+window.onload = drawLibrary();

@@ -16,7 +16,7 @@
     <h1>📚 My Library</h1>
     <form id="mainform">
         <div id="title-div">
-          <input type="text" id="booktitle" name="booktitle" placeholder="Book Title" required autofocus><br>
+          <input type="text" id="bookTitle" name="bookTitle" placeholder="Book Title" required autofocus><br>
         </div>
   
         <div id="author-div">
@@ -31,11 +31,12 @@
           <label for="alreadyread">Already read?</label>
           <input type="checkbox" id="alreadyread" name="alreadyread"><br>
         </div>
-        <input type="submit" value="Add to Library">
+        <input type="submit" value="Add to Library" onclick="addBookToLibrary()">
     </form>
     <br>
 </header>
 <body>
+    <h1>📚 Book List</h1>
     <table class="bookTable">
         <tr>
           <th>Title</th>
