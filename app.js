@@ -22,7 +22,7 @@ let myLibrary = [
 ];
 
 const form = document.getElementById("main-form");
-
+const body = document.querySelector('body');
 const grid = document.querySelector('#bookTable');
 
 form.addEventListener("submit", addBookToLibrary)
@@ -72,7 +72,7 @@ function makeCard() {
       status.classList.add('readstatus');
 
       const remove = document.createElement('button');
-      remove.setAttribute('id', 'removebtn');
+      remove.setAttribute('id', 'delete');
       remove.textContent = 'Remove';
 
       grid.appendChild(card);
@@ -104,7 +104,7 @@ function addCard() {
         status.classList.add('readstatus');
   
         const remove = document.createElement('button');
-        remove.setAttribute('id', 'removebtn');
+        remove.setAttribute('id', 'delete');
         remove.textContent = 'Remove';
   
         grid.appendChild(card);
@@ -116,15 +116,18 @@ function addCard() {
       });
 }
 
-const remove = document.getElementsByTagName('removebtn');
-// remove.addEventListener("removebtn", removeCard);
+const remove = document.getElementById("delete");
 
-function removeCard(event) {
-    if (event.taret.id == 'removebtn'){
-        console.log("delete found");
+body.addEventListener('click', (e) => delReadButton(e));
+
+function delReadButton(e) {
+    if (e.target.id == "readCount"){
+        console.log("read!");
     }
-    else {
-        console.log("other clicks found");
+    else if (e.target.id == "delete") {
+        console.log("deleting..");
+        e.target.parentElement.remove();
+
     }
 }
 
