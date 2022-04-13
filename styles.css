@@ -1,3 +1,32 @@
 /*  Library App
-    Created using TOP 
-    Michael Schroeder */
+    Created using TOP  */
+
+
+    body {
+        text-align: center;
+
+    }
+    
+    div {
+        display: inline-block;
+
+    }
+    
+    button {
+        display: inline-block;
+        padding: 1px 20px;
+
+    }
+    
+    #table {
+        display: block;
+        margin-top: 20px;
+
+    }
+
+    .card{
+        border: 1px solid black;
+        padding: 25px 25px;
+        margin-top: 20px;
+        border-radius: 10%;
+    }

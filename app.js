@@ -1,22 +1,32 @@
 // Library App
 // Created using TOP 
-// Michael Schroeder
+
 "use strict";
 
-let myLibrary = [];
+let myLibrary = [ 
+  {
+    title: 'Gates Of Fire',
+    author: 'Stephen Pressfield',
+    pages: '490',
+  },
+  {
+    title: 'A Game Of Thrones',
+    author: 'George R.R. Martin',
+    pages: '694',
+  },
+  {
+    title: 'Is this WiFi Organic',
+    author: 'Dave Farina',
+    pages: '286',
+  },
+];
 
-const submit = document.getElementById('mainform');
+const form = document.getElementById("main-form");
 
+const grid = document.querySelector('#bookTable');
 
-submit.addEventListener('click', event => {
-    const { target } = event;
-    // const { value } = target;
-    if(!target.matches('button')) {
-        return;
-      }
-      console.log('drawing library');
-      drawLibrary();
-});
+form.addEventListener("submit", addBookToLibrary)
+
 
 function Book(title, author, pages, read) {
   // Book constructor
@@ -24,50 +34,98 @@ function Book(title, author, pages, read) {
   this.author = author;
   this.pages = pages;
   this.read = read;
-}
+};
 
 
-// forcing a few test books to display table and test function addBookToLibrary
-function populateLibrary() {
-    myLibrary.push(new Book('Ulysses', 'James Joyce', '347', 'yes'));
-    myLibrary.push(new Book('Don Quixote', 'Miguel de Cervantes', '500', 'yes'));
-    myLibrary.push(new Book('Moby Dick', 'Herman Melville', '500', 'no'));
-}
+// handles the prototype push of a new book to the original array
+function addBookToLibrary(event) {
+    event.preventDefault();
 
-function addBookToLibrary() {
-    const title = document.getElementById('bookTitle').value;
+    const title = document.getElementById('title').value;
     const author = document.getElementById('author').value;
     const pages = document.getElementById('pages').value;
     const read = document.getElementById('alreadyread').checked;
+    const submittedBook = new Book(title, author, pages, read);
 
-    // e.preventDefault();
-    let submittedBook = new Book(title, author, pages, read);
     myLibrary.push(submittedBook);
-    console.log('pushing');
-    drawLibrary();
+    addCard();
+    form.reset();
+};
+
+// handles building the initial library
+function makeCard() {
+    myLibrary.forEach((Object) => {
+      const card = document.createElement('div');
+      card.classList.add('card');
+
+      const bookTitle = document.createElement('h3');
+      bookTitle.textContent = `${Object.title}`;
+
+      const auth = document.createElement('p');
+      auth.textContent = `${Object.author}`;
+
+      const pageNum = document.createElement('p');
+      pageNum.textContent = `Pages: ${Object.pages}`;
+
+      const status = document.createElement('button');
+      status.textContent = 'Read';
+      status.classList.add('readstatus');
+
+      const remove = document.createElement('button');
+      remove.setAttribute('id', 'removebtn');
+      remove.textContent = 'Remove';
+
+      grid.appendChild(card);
+      card.appendChild(bookTitle);
+      card.appendChild(auth);
+      card.appendChild(pageNum);
+      card.appendChild(remove);
+    });
 }
 
-// draws the table and adds all array elements to the table
-function drawLibrary() {
-    let html = "<table border='1|1'>";
-    
-    for (let i = 0; i < myLibrary.length; i++) {
-        html+="<tr>";
-        html+="<td>"+myLibrary[i].title+"</td>";
-        html+="<td>"+myLibrary[i].author+"</td>";
-        html+="<td>"+myLibrary[i].pages+"</td>";
-        html+="<td>"+myLibrary[i].read+"</td>";
-        html+="</tr>";
-        myLibrary[i].id++;
-}
-    html+="</table>";
-    document.getElementById("box").innerHTML = html;
+//handles adding new cards
+function addCard() {
+
+    myLibrary.slice(myLibrary.length - 1).forEach((Object) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+  
+        const bookTitle = document.createElement('h3');
+        bookTitle.textContent = `${Object.title}`;
+  
+        const auth = document.createElement('p');
+        auth.textContent = `${Object.author}`;
+  
+        const pageNum = document.createElement('p');
+        pageNum.textContent = `Pages: ${Object.pages}`;
+  
+        const status = document.createElement('button');
+        status.textContent = 'Read';
+        status.classList.add('readstatus');
+  
+        const remove = document.createElement('button');
+        remove.setAttribute('id', 'removebtn');
+        remove.textContent = 'Remove';
+  
+        grid.appendChild(card);
+        card.appendChild(bookTitle);
+        card.appendChild(auth);
+        card.appendChild(pageNum);
+        card.appendChild(remove);
+        console.log("addCard()");
+      });
 }
 
-function removeBook() {
-     // do stuff here
+const remove = document.getElementsByTagName('removebtn');
+// remove.addEventListener("removebtn", removeCard);
 
+function removeCard(event) {
+    if (event.taret.id == 'removebtn'){
+        console.log("delete found");
+    }
+    else {
+        console.log("other clicks found");
+    }
 }
 
-window.onload = populateLibrary();
-window.onload = drawLibrary();
+window.onload = makeCard();
